@@ -1,7 +1,7 @@
 import: 
 - source: Activiti/activiti-scripts:.travis.java.yml@dev-almerico-3212-movepropogation-to-trtavis
   mode: deep_merge_append
-before_install: |
+before_script: |
   curl https://kubernetes-helm.storage.googleapis.com/helm-v${HELM_VERSION}-linux-amd64.tar.gz | tar zx
   sudo mv linux-amd64/helm /usr/local/bin/
   curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v${KUBERNETES_VERSION}/bin/linux/amd64/kubectl &&
