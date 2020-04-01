@@ -1,24 +1,22 @@
 import: Activiti/activiti-scripts:.travis.java.yml@dev-almerico-3212-movepropogation-to-trtavis
-
-
 notifications:
   webhooks:
     urls:
-      - https://webhooks.gitter.im/e/4eabeeadee998a77068b
-    on_success: change  # options: [always|never|change] default: always
-    on_failure: always  # options: [always|never|change] default: always
-    on_start: never     # options: [always|never|change] default: always
+    - https://webhooks.gitter.im/e/4eabeeadee998a77068b
+    on_success: change
+    on_failure: always
+    on_start: never
   slack:
     on_pull_requests: false
     rooms:
-      secure: "HAijs6KHU8EjUQnq7vNV3q8B6Spzf7BdTt/iQfvs+0fg3dv8wxUcXkf4xjl3VUnX1/SfeUiDE8PKm/AdjMV0vwn0cjz3iO4aLfu5OMS5FhiTON/xt1Vi3bosoakJydF6cMK8cNLS6xG5VxynzMJbKlkxO0aPvk1cHeftc/j0oGIeS0d4lr4aPG6Jx0Dr/zBBkJV/sV73w10gcHQ7ZFV2RNbLaTufRNYH0jimsQzBPIbJjagPhr6WIkUWc2FaedLKOc9xWg7eSOGseG1U6dmxJTf19qRgOlmmIiubJp2M/rqOSY4MzIMQ6mQ9gM+fp1WOW1qsV2oKp3Ns9SnJJxNhrLIS0PXyER3Q3HdmU66aYZ31ZC3pRgjBkcBe4R6rdy6bWTZq1fY1KrexxDtqgzXw9y0dCV0MqzbjbMOYh//sbV3jqqPoSqSuOjWQW+MIG7o2pj1JseHJBl+6ypky/TKYbYnbCCWMnWYyFwXnc0XcyJWRr304NEkqYamhNymcRW/i5SrikNpb0ifq8mg/yiz6n6qwziWysw3H9NTn0YRDDDzQYGpn0x5lQ44jso7qM8kk7KsB9FSyBq4py+T1TLbL/RMyUJsYWGyWM4wJAuONhAfnkiW9OKua7APQAycvwsybXowolYIIEvZ9Lq3px1OsXA4UYEoSxQ+p2STsqyVkhP4="
+      secure: HAijs6KHU8EjUQnq7vNV3q8B6Spzf7BdTt/iQfvs+0fg3dv8wxUcXkf4xjl3VUnX1/SfeUiDE8PKm/AdjMV0vwn0cjz3iO4aLfu5OMS5FhiTON/xt1Vi3bosoakJydF6cMK8cNLS6xG5VxynzMJbKlkxO0aPvk1cHeftc/j0oGIeS0d4lr4aPG6Jx0Dr/zBBkJV/sV73w10gcHQ7ZFV2RNbLaTufRNYH0jimsQzBPIbJjagPhr6WIkUWc2FaedLKOc9xWg7eSOGseG1U6dmxJTf19qRgOlmmIiubJp2M/rqOSY4MzIMQ6mQ9gM+fp1WOW1qsV2oKp3Ns9SnJJxNhrLIS0PXyER3Q3HdmU66aYZ31ZC3pRgjBkcBe4R6rdy6bWTZq1fY1KrexxDtqgzXw9y0dCV0MqzbjbMOYh//sbV3jqqPoSqSuOjWQW+MIG7o2pj1JseHJBl+6ypky/TKYbYnbCCWMnWYyFwXnc0XcyJWRr304NEkqYamhNymcRW/i5SrikNpb0ifq8mg/yiz6n6qwziWysw3H9NTn0YRDDDzQYGpn0x5lQ44jso7qM8kk7KsB9FSyBq4py+T1TLbL/RMyUJsYWGyWM4wJAuONhAfnkiW9OKua7APQAycvwsybXowolYIIEvZ9Lq3px1OsXA4UYEoSxQ+p2STsqyVkhP4=
     on_failure: change
     on_success: never
     template:
-      - "Repo `%{repository_slug}` *%{result}* build (<%{build_url}|#%{build_number}>) for commit (<%{compare_url}|%{commit}>) on branch `%{branch}`."
-      - "Author: %{author} Execution time: *%{duration}*"
-      - "Message: %{message}"
-
+    - Repo `%{repository_slug}` *%{result}* build (<%{build_url}|#%{build_number}>)
+      for commit (<%{compare_url}|%{commit}>) on branch `%{branch}`.
+    - 'Author: %{author} Execution time: *%{duration}*'
+    - 'Message: %{message}'
 stages:
 - name: verify
 - name: tag
@@ -50,3 +48,6 @@ jobs:
     stage: updatebot
     script:
     - export VERSION=$(cat VERSION)| make updatebot/push-version
+env:
+  global:
+    secure: RN7WbWGNL1jc1x1PzseMpgBb/dmm+XhdxSeS6z6KKLzpMX9BpXSqSLKO/Fj0DjAuDXboSuoe7Jk580mDGJBCT/TgCNac+kKZun0kr90O/MDuWTJNNF6e5qjA8/e7lkN14knyFp9W1OQgzcC6U16zqGE6WdOrw4ArHFWruPg0vu/orL5/Oki5KL4u0F3Vte06teroeSKs6hSr7Wtgbvr9w0ZkXhJ/XdhFmTrvS2YZedhEAPVUEpdkklWfVzd4DJHhh9egTAQQO7M6zujA8YdDVO72HAaeZrfFnVBlcdmOcQ17hQmnnMAOjVxT3pvDlyNGh3yal/+jVbS+MQIKCaUr4R4UFR0zYEGfGLfVrKB4hGpjfNqGXj1SBLBc40UJQsWkFSCgJGQMMqSj3135r7gz15r2OVro5Kh4ODcWNCJRz2jtjwvbAxamUTB6UCDgGYYrjbz0KJEarD16lhP0db2ok04ppHWQub6CJK3/eHqfu5CAL9lxe8C6VxosepDiM2LJpVq43y5aPD4WofrMUFlCIFFdLbIEWRPeF30BAN0+sUwKKlGJ9PBdEbEjF9UC5NlaS9Jwgt9KuT9GukrpWtG+TEqsDZtMa73qTqXxuufVqRaBU+QyPwUSS+YqoNiAFnX6P467s4NeKCdo6jWbbH6tPLKLTviI0stRR4C6g65O36E=
