@@ -42,7 +42,7 @@ jobs:
   - name: Verify build
     stage: verify
     script:
-    - mvn versions:set -DnewVersion=$VERSION
+    - mvn versions:set -DnewVersion=$(cat VERSION)
     - mvn clean install
     - make updatebot/push-version-dry
     - make replace-release-full-chart-names
