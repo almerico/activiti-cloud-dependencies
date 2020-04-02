@@ -61,7 +61,10 @@ jobs:
     stage: verify
     script:
     - echo "PREVIEW_NAMESPACE=${PREVIEW_NAMESPACE}"
-    - echo "GH_REF="github.com/${TRAVIS_REPO_SLUG}""
+    - echo "GH_REF=github.com/${TRAVIS_REPO_SLUG}"
+    - ssh -T git@github.com
+    - cat ~/.gitconfig
+    - cat ~/.git-credentials
     - mvn versions:set -DnewVersion=$(cat VERSION)
     - mvn clean install
     - make updatebot/push-version-dry
