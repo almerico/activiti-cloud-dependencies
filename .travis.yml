@@ -17,6 +17,7 @@ env:
     - HELM_REPO_BASE_URL=https://kubernetes-charts.alfresco.com
     - HELM_REPO=stable
     - KUBERNETES_VERSION=1.14.8
+    
 before_script: |
   git config credential.helper store
   echo "machine github.com login jx-activiti-cloud password $GH_TOKEN" >~/.netrc
