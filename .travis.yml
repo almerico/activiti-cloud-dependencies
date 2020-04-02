@@ -19,6 +19,12 @@ env:
     - HELM_REPO=stable
     - KUBERNETES_VERSION=1.14.8
 before_script: |
+   git config credential.helper store
+   echo "machine github.com login jx-activiti-cloud password $GH_TOKEN" >~/.netrc
+   ssh -vT git@github.com
+   cat ~/.gitconfig
+   cat ~/.git-credentials
+   
   curl https://kubernetes-helm.storage.googleapis.com/helm-v${HELM_VERSION}-linux-amd64.tar.gz | tar zx
   sudo mv linux-amd64/helm /usr/local/bin/
   curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v${KUBERNETES_VERSION}/bin/linux/amd64/kubectl &&
@@ -27,7 +33,6 @@ before_script: |
   kubectl config set-credentials default-admin --token=${K8S_API_TOKEN} &&
   kubectl config set-context default-system --cluster=default-cluster --user=default-admin &&
   kubectl config use-context default-system
-  git config credential.helper store
   
 notifications:
   webhooks:
@@ -62,9 +67,6 @@ jobs:
     script:
     - echo "PREVIEW_NAMESPACE=${PREVIEW_NAMESPACE}"
     - echo "GH_REF=github.com/${TRAVIS_REPO_SLUG}"
-    - ssh -vT git@github.com
-    - cat ~/.gitconfig
-    - cat ~/.git-credentials
     - mvn versions:set -DnewVersion=$(cat VERSION)
     - mvn clean install
     - make updatebot/push-version-dry
