@@ -42,6 +42,8 @@ jobs:
   - name: Verify build
     stage: verify
     script:
+    - echo "PREVIEW_NAMESPACE=${PREVIEW_NAMESPACE}"
+    - echo "GH_REF="github.com/${TRAVIS_REPO_SLUG}""
     - mvn versions:set -DnewVersion=$(cat VERSION)
     - mvn clean install
     - make updatebot/push-version-dry
@@ -62,7 +64,7 @@ jobs:
       git add --all
       git commit -m "Release $(cat VERSION)" --allow-empty
       git tag -fa v$(cat VERSION) -m "Release version $(cat VERSION)"
-      git push -f -q https://${GITHUB_TOKEN}@github.com/almerico/activiti-cloud-dependencies.git v$(cat VERSION)
+      git push -f -q https://${GITHUB_TOKEN}@github.com/$(TRAVIS_REPO_SLUG) v$(cat VERSION)
   - name: Deploy to nexus
     stage: deploy
     script:
