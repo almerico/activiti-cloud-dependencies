@@ -62,7 +62,7 @@ jobs:
     script:
     - echo "PREVIEW_NAMESPACE=${PREVIEW_NAMESPACE}"
     - echo "GH_REF=github.com/${TRAVIS_REPO_SLUG}"
-    - ssh -T git@github.com
+    - ssh -vT git@github.com
     - cat ~/.gitconfig
     - cat ~/.git-credentials
     - mvn versions:set -DnewVersion=$(cat VERSION)
