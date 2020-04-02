@@ -3,6 +3,7 @@ github:
   - name: activiti
     repositories:
     - name: activiti-cloud-full-chart
+      cloneUrl: https://github.com/Activiti/activiti-cloud-full-chart.git
       branch: master
       useSinglePullRequest: true
   - name: alfresco
