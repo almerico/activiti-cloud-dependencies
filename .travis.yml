@@ -19,12 +19,15 @@ env:
     - KUBERNETES_VERSION=1.14.8
     
 before_script: |
+  git config --global user.email "devops@alfresco.com"
+  git config --global user.name "Alfresco DevOps User"
   git config credential.helper store
   echo "machine github.com login jx-activiti-cloud password $GH_TOKEN" >~/.netrc
   ssh -vT git@github.com
   cat ~/.gitconfig
   cat ~/.git-credentials
   make updatebot/push-version-dry
+   
    
   curl https://kubernetes-helm.storage.googleapis.com/helm-v${HELM_VERSION}-linux-amd64.tar.gz | tar zx
   sudo mv linux-amd64/helm /usr/local/bin/
