@@ -63,7 +63,7 @@ jobs:
   - name: Verify build
     stage: verify
     script:
-    - travis_wait ${TRAVIS_WAIT_TIMEOUT} mvn versions:set -DnewVersion=$(cat VERSION) || travis_terminate 1;
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} mvn versions:set -DnewVersion=${cat VERSION} || travis_terminate 1;
     - travis_wait ${TRAVIS_WAIT_TIMEOUT} mvn clean install|| travis_terminate 1;
     - travis_wait ${TRAVIS_WAIT_TIMEOUT} make updatebot/push-version-dry|| travis_terminate 1;
     - travis_wait ${TRAVIS_WAIT_TIMEOUT}  make replace-release-full-chart-names|| travis_terminate 1;
@@ -83,7 +83,7 @@ jobs:
       git add --all
       git commit -m "Release $(cat VERSION)" --allow-empty
       git tag -fa v$(cat VERSION) -m "Release version $(cat VERSION)"|| travis_terminate 1;
-      git push -f -q https://${GITHUB_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git v$(cat VERSION)|| travis_terminate 1;
+      git push -f -q https://${GITHUB_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git v${cat VERSION}|| travis_terminate 1;
   - name: Deploy to nexus
     stage: deploy
     script:
