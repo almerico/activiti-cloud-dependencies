@@ -24,10 +24,13 @@ before_script: |
   git config credential.helper store
   echo "https://almerico:$GITHUB_TOKEN@github.com" >>~/git/credentials
   echo "http://almerico:GITHUB_TOKEN@github.com" >>~/git/credentials
-  echo "machine github.com login jx-activiti-cloud password $GH_TOKEN" >~/.netrc
+  echo -e "protocol=https\nhost=github.com\n" >>  ~/.git-credentials
+  
+  echo -e "machine github.com\nlogin jx-activiti-cloud\npassword $GH_TOKEN" >~/.netrc
   ssh -vT git@github.com
   cat ~/.gitconfig
   cat ~/.git-credentials
+  
   make updatebot/push-version-dry
    
    
