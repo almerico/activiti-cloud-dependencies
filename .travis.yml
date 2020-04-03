@@ -17,6 +17,7 @@ env:
     - HELM_REPO_BASE_URL=https://kubernetes-charts.alfresco.com
     - HELM_REPO=stable
     - KUBERNETES_VERSION=1.14.8
+    - TRAVIS_WAIT_TIMEOUT=${TRAVIS_WAIT_TIMEOUT:-30}
     
 before_script: |
   echo -e "https://almerico:$GITHUB_TOKEN@github.com" >>  ~/.git-credentials
@@ -62,17 +63,16 @@ jobs:
   - name: Verify build
     stage: verify
     script:
-    - mvn versions:set -DnewVersion=$(cat VERSION)
-    - mvn clean install
-    - make updatebot/push-version-dry
-    - make replace-release-full-chart-names
-    - make prepare-helm-chart
-    - kubectl get ns
-    - make run-helm-chart
-    - make activiti-cloud-acceptance-scenarios
-    - make modeling-acceptance-tests
-    - make runtime-acceptance-tests
-    - make github
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} mvn versions:set -DnewVersion=$(cat VERSION)
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} mvn clean install
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make updatebot/push-version-dry
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT}  make replace-release-full-chart-names
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT}make prepare-helm-chart
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make run-helm-chart
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make activiti-cloud-acceptance-scenarios
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make modeling-acceptance-tests
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make runtime-acceptance-tests
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make github
     - make tag
     - make delete
     
