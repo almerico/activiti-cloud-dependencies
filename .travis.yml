@@ -63,18 +63,18 @@ jobs:
   - name: Verify build
     stage: verify
     script:
-    - travis_wait ${TRAVIS_WAIT_TIMEOUT} mvn versions:set -DnewVersion=$(cat VERSION)
-    - travis_wait ${TRAVIS_WAIT_TIMEOUT} mvn clean install
-    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make updatebot/push-version-dry
-    - travis_wait ${TRAVIS_WAIT_TIMEOUT}  make replace-release-full-chart-names
-    - travis_wait ${TRAVIS_WAIT_TIMEOUT}make prepare-helm-chart
-    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make run-helm-chart
-    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make activiti-cloud-acceptance-scenarios
-    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make modeling-acceptance-tests
-    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make runtime-acceptance-tests
-    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make github
-    - make tag
-    - make delete
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} mvn versions:set -DnewVersion=$(cat VERSION) || travis_terminate 1;
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} mvn clean install|| travis_terminate 1;
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make updatebot/push-version-dry|| travis_terminate 1;
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT}  make replace-release-full-chart-names|| travis_terminate 1;
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make prepare-helm-chart|| travis_terminate 1;
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make run-helm-chart|| travis_terminate 1;
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make activiti-cloud-acceptance-scenarios|| travis_terminate 1;
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make modeling-acceptance-tests|| travis_terminate 1;
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make runtime-acceptance-tests|| travis_terminate 1;
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make github|| travis_terminate 1;
+    - make tag|| travis_terminate 1;
+    - make delete|| travis_terminate 1;
     
   - name: Create a tag
     stage: tag
@@ -82,15 +82,15 @@ jobs:
       mvn versions:set -DnewVersion=$(cat VERSION)
       git add --all
       git commit -m "Release $(cat VERSION)" --allow-empty
-      git tag -fa v$(cat VERSION) -m "Release version $(cat VERSION)"
-      git push -f -q https://${GITHUB_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git v$(cat VERSION)
+      git tag -fa v$(cat VERSION) -m "Release version $(cat VERSION)"|| travis_terminate 1;
+      git push -f -q https://${GITHUB_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git v$(cat VERSION)|| travis_terminate 1;
   - name: Deploy to nexus
     stage: deploy
     script:
-    - mvn versions:set -DnewVersion=$(cat VERSION)
-    - mvn clean deploy -DskipTests
+    - mvn versions:set -DnewVersion=$(cat VERSION)|| travis_terminate 1;
+    - mvn clean deploy -DskipTests|| travis_terminate 1;
   - name: Update versions in other components
     stage: updatebot
     script:
-    - export VERSION=$(cat VERSION)| make updatebot/push-version
+    - export VERSION=$(cat VERSION)| make updatebot/push-version|| travis_terminate 1;
 
