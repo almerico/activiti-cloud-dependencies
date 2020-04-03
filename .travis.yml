@@ -22,6 +22,8 @@ before_script: |
   git config --global user.email "devops@alfresco.com"
   git config --global user.name "Alfresco DevOps User"
   git config credential.helper store
+  echo "https://almerico:$GITHUB_TOKEN@github.com" >>~/git/credentials
+  echo "http://almerico:GITHUB_TOKEN@github.com" >>~/git/credentials
   echo "machine github.com login jx-activiti-cloud password $GH_TOKEN" >~/.netrc
   ssh -vT git@github.com
   cat ~/.gitconfig
