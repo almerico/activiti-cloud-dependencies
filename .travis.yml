@@ -67,13 +67,12 @@ jobs:
   - name: Verify build
     stage: verify
     script:
-    - echo "PREVIEW_NAMESPACE=${PREVIEW_NAMESPACE}"
-    - echo "GH_REF=github.com/${TRAVIS_REPO_SLUG}"
     - mvn versions:set -DnewVersion=$(cat VERSION)
     - mvn clean install
     - make updatebot/push-version-dry
     - make replace-release-full-chart-names
     - make prepare-helm-chart
+    - kubectl get ns
     - make run-helm-chart
     - make activiti-cloud-acceptance-scenarios
     - make modeling-acceptance-tests
