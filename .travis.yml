@@ -19,9 +19,9 @@ env:
     - KUBERNETES_VERSION=1.14.8
     
 before_script: |
-  git config --global user.email "devops@alfresco.com"
-  git config --global user.name "Alfresco DevOps User"
-  git config credential.helper store
+  #git config --global user.email "devops@alfresco.com"
+  #git config --global user.name "Alfresco DevOps User"
+  #git config credential.helper store
 
   echo -e "https://almerico:$GITHUB_TOKEN@github.com" >>  ~/.git-credentials
   
