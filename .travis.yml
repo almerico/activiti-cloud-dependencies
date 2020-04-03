@@ -63,16 +63,14 @@ jobs:
   - name: Verify build
     stage: verify
     script:
-    - travis_wait ${TRAVIS_WAIT_TIMEOUT} mvn versions:set -DnewVersion=${cat VERSION} || travis_terminate 1;
-    - travis_wait ${TRAVIS_WAIT_TIMEOUT} mvn clean install|| travis_terminate 1;
-    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make updatebot/push-version-dry|| travis_terminate 1;
-    - travis_wait ${TRAVIS_WAIT_TIMEOUT}  make replace-release-full-chart-names|| travis_terminate 1;
-    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make prepare-helm-chart|| travis_terminate 1;
-    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make run-helm-chart|| travis_terminate 1;
-    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make activiti-cloud-acceptance-scenarios|| travis_terminate 1;
-    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make modeling-acceptance-tests|| travis_terminate 1;
-    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make runtime-acceptance-tests|| travis_terminate 1;
-    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make github|| travis_terminate 1;
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} mvn versions:set -DnewVersion=${cat VERSION} 
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} mvn clean install  
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make prepare-helm-chart
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make run-helm-chart
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make activiti-cloud-acceptance-scenarios
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make modeling-acceptance-tests
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make runtime-acceptance-tests
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make github
     - make tag|| travis_terminate 1;
     - make delete|| travis_terminate 1;
     
