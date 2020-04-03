@@ -21,7 +21,6 @@ env:
     
 before_script: |
   echo -e "https://almerico:$GITHUB_TOKEN@github.com" >>  ~/.git-credentials
-  make updatebot/push-version-dry
    
   curl https://kubernetes-helm.storage.googleapis.com/helm-v${HELM_VERSION}-linux-amd64.tar.gz | tar zx
   sudo mv linux-amd64/helm /usr/local/bin/
