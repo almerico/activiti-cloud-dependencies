@@ -35,15 +35,15 @@ activiti-cloud-acceptance-scenarios:
 	cd activiti-cloud-acceptance-scenarios && \
 	git fetch --all --tags --prune && \
 	git checkout tags/v$(ACTIVITI_CLOUD_ACCEPTANCE_SCENARIOUS_VERSION) -b $(ACTIVITI_CLOUD_ACCEPTANCE_SCENARIOUS_VERSION) && \
-	mvn clean install -DskipTests
+	mvn clean install -q -DskipTests
 
 modeling-acceptance-tests:
 	cd activiti-cloud-acceptance-scenarios && \
-	mvn -pl 'modeling-acceptance-tests' -Dlogging.level.root=off -Dspring.main.banner-mode=off -Dserenity.console.headings=minimal clean verify
+	mvn -pl 'modeling-acceptance-tests' -q -Dlogging.level.root=off -Dspring.main.banner-mode=off -Dserenity.console.headings=minimal clean verify
 
 runtime-acceptance-tests:
 	cd activiti-cloud-acceptance-scenarios && \
-	mvn -pl 'runtime-acceptance-tests' -Dlogging.level.root=off -Dspring.main.banner-mode=off -Dserenity.console.headings=minimal clean verify
+	mvn -pl 'runtime-acceptance-tests' -q -Dlogging.level.root=off -Dspring.main.banner-mode=off -Dserenity.console.headings=minimal clean verify
 
 update-ea:
 	#$(eval ACTIVITI_CLOUD_VERSION = $(shell cat VERSION))
