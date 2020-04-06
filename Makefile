@@ -39,11 +39,11 @@ activiti-cloud-acceptance-scenarios:
 
 modeling-acceptance-tests:
 	cd activiti-cloud-acceptance-scenarios && \
-	mvn -pl 'modeling-acceptance-tests' clean verify
+	mvn -pl 'modeling-acceptance-tests' -Dlogging.level.root=off -Dspring.main.banner-mode=off -Dserenity.console.headings=minimal clean verify
 
 runtime-acceptance-tests:
 	cd activiti-cloud-acceptance-scenarios && \
-	mvn -pl 'runtime-acceptance-tests' clean verify
+	mvn -pl 'runtime-acceptance-tests' -Dlogging.level.root=off -Dspring.main.banner-mode=off -Dserenity.console.headings=minimal clean verify
 
 update-ea:
 	#$(eval ACTIVITI_CLOUD_VERSION = $(shell cat VERSION))
