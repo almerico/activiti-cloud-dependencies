@@ -146,7 +146,6 @@ run-helm-chart:
             		--install \
             		--set global.gateway.domain=${GLOBAL_GATEWAY_DOMAIN} \
             		--namespace ${PREVIEW_NAMESPACE} \
-            		--debug \
             		--wait
 
 delete:
