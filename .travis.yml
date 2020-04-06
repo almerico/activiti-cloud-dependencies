@@ -7,7 +7,7 @@ env:
     - APP_NAME='activiti-cloud-dependencies'
     - PREVIEW_NAMESPACE="example-$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER";
 #    - GLOBAL_GATEWAY_DOMAIN="34.224.44.114.nip.io"
-    - GLOBAL_GATEWAY_DOMAIN="aps2dev.envalfresco.com"
+    - GLOBAL_GATEWAY_DOMAIN="35.242.205.159.nip.io"
     - REALM="activiti"
     - GATEWAY_HOST="gateway.$PREVIEW_NAMESPACE.$GLOBAL_GATEWAY_DOMAIN"
     - SSO_HOST="identity.$PREVIEW_NAMESPACE.$GLOBAL_GATEWAY_DOMAIN"
