@@ -65,8 +65,8 @@ jobs:
     stage: verify
     script:
     - cat VERSION
-    - travis_wait ${TRAVIS_WAIT_TIMEOUT} mvn versions:set -DnewVersion=$(cat VERSION) 
-    - travis_wait ${TRAVIS_WAIT_TIMEOUT} mvn clean install
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} mvn -q versions:set -DnewVersion=$(cat VERSION) 
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} mvn -q clean install
     - travis_wait ${TRAVIS_WAIT_TIMEOUT} make updatebot/push-version-dry
     - travis_wait ${TRAVIS_WAIT_TIMEOUT} make prepare-helm-chart
     - travis_wait ${TRAVIS_WAIT_TIMEOUT} make run-helm-chart
@@ -88,8 +88,8 @@ jobs:
   - name: Deploy to nexus
     stage: deploy
     script:
-    - mvn versions:set -DnewVersion=$(cat VERSION)|| travis_terminate 1;
-    - mvn clean deploy -DskipTests|| travis_terminate 1;
+    - mvn -q versions:set -DnewVersion=$(cat VERSION)|| travis_terminate 1;
+    - mvn -q clean deploy -DskipTests|| travis_terminate 1;
   - name: Update versions in other components
     stage: updatebot
     script:
