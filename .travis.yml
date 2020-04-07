@@ -65,8 +65,8 @@ jobs:
     stage: verify
     script:
     - cat VERSION
-    - travis_wait ${TRAVIS_WAIT_TIMEOUT} mvn -q versions:set -DnewVersion=$(cat VERSION) 
-    - travis_wait ${TRAVIS_WAIT_TIMEOUT} mvn -q clean install
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} mvn -q versions:set -Droot.log.level=INFO -DnewVersion=$(cat VERSION) 
+    - travis_wait ${TRAVIS_WAIT_TIMEOUT} mvn -q -Droot.log.level=INFO clean install
     - travis_wait ${TRAVIS_WAIT_TIMEOUT} make updatebot/push-version-dry
     - travis_wait ${TRAVIS_WAIT_TIMEOUT} make prepare-helm-chart
     - travis_wait ${TRAVIS_WAIT_TIMEOUT} make run-helm-chart
@@ -80,7 +80,7 @@ jobs:
   - name: Create a tag
     stage: tag
     script: |
-      mvn versions:set -DnewVersion=$(cat VERSION)
+      mvn versions:set -Droot.log.level=INFO -DnewVersion=$(cat VERSION)
       git add --all
       git commit -m "Release $(cat VERSION)" --allow-empty
       git tag -fa v$(cat VERSION) -m "Release version $(cat VERSION)"|| travis_terminate 1;
@@ -88,8 +88,8 @@ jobs:
   - name: Deploy to nexus
     stage: deploy
     script:
-    - mvn -q versions:set -DnewVersion=$(cat VERSION)|| travis_terminate 1;
-    - mvn -q clean deploy -DskipTests|| travis_terminate 1;
+    - mvn -q versions:set -Droot.log.level=INFO -DnewVersion=$(cat VERSION)|| travis_terminate 1;
+    - mvn -q clean deploy -Droot.log.level=INFO -DskipTests|| travis_terminate 1;
   - name: Update versions in other components
     stage: updatebot
     script:
