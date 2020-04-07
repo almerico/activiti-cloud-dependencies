@@ -93,4 +93,6 @@ jobs:
     stage: updatebot
     script:
     - export VERSION=$(cat VERSION)| make updatebot/push-version|| travis_terminate 1;
-
+after_script:
+    - make delete
+    
