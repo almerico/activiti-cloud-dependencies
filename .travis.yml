@@ -70,7 +70,7 @@ jobs:
     - travis_wait ${TRAVIS_WAIT_TIMEOUT} make prepare-helm-chart
     - travis_wait ${TRAVIS_WAIT_TIMEOUT} make run-helm-chart
     - travis_wait ${TRAVIS_WAIT_TIMEOUT} make activiti-cloud-acceptance-scenarios
-    - travis_wait ${TRAVIS_WAIT_TIMEOUT} make modeling-acceptance-tests
+    #- travis_wait ${TRAVIS_WAIT_TIMEOUT} make modeling-acceptance-tests
     - travis_wait ${TRAVIS_WAIT_TIMEOUT} make runtime-acceptance-tests
     - travis_wait ${TRAVIS_WAIT_TIMEOUT} make github
     - make tag|| travis_terminate 1;
