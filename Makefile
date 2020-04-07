@@ -150,7 +150,7 @@ run-helm-chart:
 
 delete:
 	helm delete --purge ${PREVIEW_NAMESPACE} || echo "try to remove helm chart"
-
+	kubectl delete ns ${PREVIEW_NAMESPACE} || echo "try to remove namespace"
 
 RELEASE_GREP_EXPR := '^[Rr]elease'
 
