@@ -1,5 +1,5 @@
 import: 
-- source: Activiti/activiti-scripts:.travis.java.yml@dev-almerico-3212-movepropogation-to-trtavis
+- source: Activiti/activiti-scripts:.travis.java.yml@master
   mode: deep_merge_append
 env:
   global:
@@ -92,6 +92,7 @@ jobs:
     stage: updatebot
     script:
     - export VERSION=$(cat VERSION)| make updatebot/push-version|| travis_terminate 1;
+    
 after_script:
     - make delete
     
